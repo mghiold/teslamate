@@ -1,0 +1,33 @@
+version: "3"
+
+services:
+  teslamate:
+    image: teslamate/teslamate:1.20
+    restart: always
+    env_file: ./.env
+    ports:
+      - 4000:4000
+    volumes:
+      - ./import:/opt/app/import
+    cap_drop:
+      - all
+
+  database:
+    image: postgres:13
+    restart: always
+    env_file: ./.env
+    volumes:
+      - teslamate-db:/media/shared/data/postgres
+
+  grafana:
+    image: teslamate/grafana:1.20
+    restart: always
+    env_file: ./.env
+    ports:
+      - 3000:3000
+    volumes:
+      - teslamate-grafana-data:/media/shared/data/grafana
+
+volumes:
+  teslamate-db:
+  teslamate-grafana-data:
