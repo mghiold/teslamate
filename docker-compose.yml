@@ -5,10 +5,11 @@ services:
     image: teslamate/teslamate:1.20
     restart: always
     env_file: ./.env
+    environment:
+      - DATABASE_HOST=database
+      - MQTT_HOST=mqtt
     ports:
       - 4000:4000
-    volumes:
-      - ./import:/opt/app/import
     cap_drop:
       - all
 
@@ -17,17 +18,19 @@ services:
     restart: always
     env_file: ./.env
     volumes:
-      - teslamate-db:/media/shared/data/postgres
+      - /media/shared/postgres/data:/var/lib/postgresql/data:rw
 
   grafana:
-    image: teslamate/grafana:1.20
+    image: tesla-solar:1.6
     restart: always
     env_file: ./.env
+    user: 115:122
+    environment:
+      - DATABASE_HOST=database
+      - PGID=122
+      - PUID=115
     ports:
       - 3000:3000
     volumes:
-      - teslamate-grafana-data:/media/shared/data/grafana
+      - /media/shared/grafana:/var/lib/grafana:rw
 
-volumes:
-  teslamate-db:
-  teslamate-grafana-data:
