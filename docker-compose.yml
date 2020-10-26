@@ -21,7 +21,7 @@ services:
       - /media/shared/postgres/data:/var/lib/postgresql/data:rw
 
   grafana:
-    image: tesla-solar:1.6
+    image: mghiold/tesla-solar:1.6
     restart: always
     env_file: ./.env
     user: 115:122
