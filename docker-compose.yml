@@ -7,7 +7,7 @@ services:
     env_file: ./.env
     environment:
       - DATABASE_HOST=database
-      - MQTT_HOST=mqtt
+      - MQTT_HOST=192.168.0.10
     ports:
       - 4000:4000
     cap_drop:
