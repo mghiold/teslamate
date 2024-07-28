@@ -2,7 +2,7 @@ version: "3"
 
 services:
   teslamate:
-    image: teslamate/teslamate:1.21.1
+    image: teslamate/teslamate:latest
     restart: always
     env_file: ./.env
     environment:
@@ -19,6 +19,15 @@ services:
     env_file: ./.env
     volumes:
       - /media/shared/postgres/data:/var/lib/postgresql/data:rw
+
+  enphaseCollector:
+    image: dlmcpaul/enphasecollector:latest
+    restart: always
+    hostname: enphase
+    container_name: enphaseCollector
+    ports:
+      - 8080:8080
+    env_file: ./.env
 
   grafana:
     image: mghiold/tesla-solar:1.6
